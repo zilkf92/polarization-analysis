@@ -1,3 +1,3 @@
 offset = [0]
 
-comport = 4
+comport = 'COM4'

@@ -30,6 +30,6 @@ class Waveplate:
         angle : Float value specifying the target position of the Rotation Mount
                 in absolute degrees
         '''
-        bus = open_serial(settings.comport)
+        bus = open_serial(settings.comport, timeout=10)
         move_abs(bus, self.address, angle + self.offset)
         bus.close()
