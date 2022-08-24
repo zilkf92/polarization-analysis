@@ -236,9 +236,9 @@ class TLPM:
 
     def __init__(self):
         if sizeof(c_voidp) == 4:
-            self.dll = cdll.LoadLibrary(r"C:\Users\CD LAB 2\Documents\DEV\photonic-backend\ThorLabsMotors\Bin\TLPM_32.dll")
+            self.dll = cdll.LoadLibrary(r"C:\Users\Romane\Documents\Workspace\polarization-analysis\ThorLabsDriver\Bin\TLPM_32.dll")
         else:
-            self.dll = cdll.LoadLibrary(r"C:\Users\CD LAB 2\Documents\DEV\photonic-backend\ThorLabsMotors\Bin\TLPM_64.dll")
+            self.dll = cdll.LoadLibrary(r"C:\Users\Romane\Documents\Workspace\polarization-analysis\ThorLabsDriver\Bin\TLPM_64.dll")
 
         self.devSession = c_long()
         self.devSession.value = 0
