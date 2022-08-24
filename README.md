@@ -1,1 +1,1 @@
-# polarization-analysis
+# This repo contains Python scripts to automatically calibrate wave plates using Thorlabs motorized rotation mounts and optical power sensors
