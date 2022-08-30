@@ -2,6 +2,7 @@ from tokenize import Double
 from ControlScripts import RotationScript, PowerMeterScript
 from Settings import pm_settings
 from scipy.optimize import curve_fit
+from math import trunc
 
 import time
 import matplotlib.pyplot as plt
@@ -19,13 +20,11 @@ power = PowerMeterScript.measure(pm)
 power_list = []
 deg_list = []
 
-for i in range(0,4):
-    j = float(i)
-    deg_list.append(j)
+for i in range(0,40):
+    deg_list.append(trunc(i))
     time.sleep(0.5)
     wp.rotate(i)
     power = PowerMeterScript.measure(pm)
-    print(power)
     power_list.append(power)
     time.sleep(0.5)
 
@@ -42,5 +41,5 @@ for i in deg_list:
     y_line.append(y)
 
 plt.scatter(deg_list, power_list)
-plt.plot(deg_list, y_line)
+plt.plot(deg_list, y_line, '--', color='red')
 plt.show()
