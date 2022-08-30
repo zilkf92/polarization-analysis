@@ -1,5 +1,6 @@
 import os
 from ctypes import cdll,c_long,c_uint32,c_uint16,c_uint8,byref,create_string_buffer,c_bool, c_char, c_char_p,c_int,c_int16,c_int8,c_double,c_float,sizeof,c_voidp, Structure
+from Settings import pm_settings
 
 _VI_ERROR = (-2147483647-1)
 VI_ON = 1
@@ -236,8 +237,10 @@ class TLPM:
 
     def __init__(self):
         if sizeof(c_voidp) == 4:
+            # Load .dll lib for 32 bit
             self.dll = cdll.LoadLibrary(r"C:\Users\Romane\Documents\Workspace\polarization-analysis\ThorLabsDriver\Bin\TLPM_32.dll")
         else:
+            # Load .dll lib for 64 bit
             self.dll = cdll.LoadLibrary(r"C:\Users\Romane\Documents\Workspace\polarization-analysis\ThorLabsDriver\Bin\TLPM_64.dll")
 
         self.devSession = c_long()

@@ -1,10 +1,10 @@
 from ControlScripts import RotationScript, PowerMeterScript
-
+from Settings import pm_settings
 import time
 
-
+serialnum = str(pm_settings.sn)
 wp = RotationScript.Waveplate(0)
-pm = PowerMeterScript.open_powermeter('1909737')
+pm = PowerMeterScript.open_powermeter(serialnumber=serialnum)
 power = PowerMeterScript.measure(pm)
 print(power)
 for i in range(0,8):
