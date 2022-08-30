@@ -1,5 +1,8 @@
-future==0.18.2
-iso8601==1.0.2
-pyserial==3.5
-PyYAML==6.0
-serial==0.0.97
+future == 0.18.2
+iso8601 == 1.0.2
+pyserial == 3.5
+PyYAML == 6.0
+serial == 0.0.97
+matplotlib == 3.5.3
+scipy == 1.9.1
+pandas == 1.4.3
