@@ -4,4 +4,4 @@
 comport = 'COM4'
 
 # set the radial offset of the mount
-offset = [0]
+offset = [3.214]

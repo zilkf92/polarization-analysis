@@ -1,45 +1,34 @@
-from tokenize import Double
 from ControlScripts import RotationScript, PowerMeterScript
 from Settings import pm_settings
 from scipy.optimize import curve_fit
-from math import trunc
+from math import fsum
 
 import time
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-
-
-def fit_function(x, a, b, c, d):
-    return a * np.sin(b * x + c) + d
 
 serialnum = str(pm_settings.sn)
-wp = RotationScript.Waveplate(0)
+waveplate = RotationScript.Waveplate(0)
 pm = PowerMeterScript.open_powermeter(serialnumber=serialnum)
-power = PowerMeterScript.measure(pm)
+
 power_list = []
 deg_list = []
 
-for i in range(0,40):
-    deg_list.append(trunc(i))
+for i in np.arange(0, 180, 1):
+    deg_list.append(i)
     time.sleep(0.5)
-    wp.rotate(i)
-    power = PowerMeterScript.measure(pm)
-    power_list.append(power)
+    waveplate.rotate(i)
+    power_samples = []
+    count = 0
+    for j in range(100):
+        power_sample = PowerMeterScript.measure(pm)
+        power_samples.append(power_sample)
+        count = count + 1
+    average_pow = fsum(power_samples)/count
+    power_list.append(average_pow)
     time.sleep(0.5)
 
 print(power_list, deg_list)
 
-popt, pcov = curve_fit(fit_function, deg_list, power_list)
-print(popt, pcov)
-
-a, b, c, d = popt
-
-y_line = []
-for i in deg_list:
-    y = fit_function(i, a, b, c, d)
-    y_line.append(y)
-
 plt.scatter(deg_list, power_list)
-plt.plot(deg_list, y_line, '--', color='red')
 plt.show()

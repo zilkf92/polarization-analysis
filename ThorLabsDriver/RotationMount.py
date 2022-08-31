@@ -19,9 +19,9 @@ def open_serial(com_port, timeout=None):
 
     Returns
     -------
-    ser : Serial port object
+    serial_port : Serial port object
     '''
-    ser = serial.Serial(
+    serial_port = serial.Serial(
         port=com_port,
         baudrate=9600,
         bytesize=serial.EIGHTBITS,
@@ -35,7 +35,7 @@ def open_serial(com_port, timeout=None):
         inter_byte_timeout=None,
         exclusive=True
     )
-    return ser
+    return serial_port
 
 
 def angle_tohexa(angle_degrees):
@@ -44,7 +44,7 @@ def angle_tohexa(angle_degrees):
 
     Parameters
     ----------
-    angle_degrees : Float number which specifies angle in degrees
+    angle_degrees : Float number which specifies angle in degrees, e.g. 3.0
 
     Returns
     -------
@@ -52,6 +52,7 @@ def angle_tohexa(angle_degrees):
     '''
     npulses_total = 143360  # equal to int('23000')
     theta_min = 360/npulses_total
+    # npulses/npulses_total corresponds to angle_degress/360
     npulses = int(floor(angle_degrees/theta_min))
     angle_hexa = hex(npulses).upper()  # e.g. 0X23C7
     return angle_hexa
@@ -69,8 +70,6 @@ def hexa_toangle(hexa_str):
     -------
     angle_degree : Number in deegrees as float type
     '''
-    # print('---')
-    # print(hexa_str)
     if hexa_str != b'\n':
         npulses_total = 143360  # equal to int('23000')
         angle_degree = int(hexa_str, 16)/npulses_total*360
@@ -87,7 +86,7 @@ def to8_format(in_str):
 
     Parameters
     ----------
-    inn_str : Hexa string with maximum length of 8 bits
+    in_str : Hexa string with maximum length of 8 bits, e.g. 0X4AA
 
     Returns
     -------
@@ -241,7 +240,6 @@ def move_abs(bus, address, angle_degrees):
     address : Positive integer which specifies the bus address of the device
     angle_degrees : Value for absolute positive angle
     '''
-    # print('move ' + str(address) + ' to:', round(angle_degrees, 2))
     command = str(address) + 'ma' + to8_format(angle_tohexa(angle_degrees))
     write_to_device(bus, address, command)
 
