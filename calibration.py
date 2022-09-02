@@ -33,7 +33,7 @@ for i in np.arange(0, 180, 5):
 print(power_list, deg_list)
 
 params, params_covariance = optimize.curve_fit(
-    f=fit.sin, xdata=deg_list, ydata=power_list
+    f=fit.sin, xdata=deg_list, ydata=power_list, p0=[3.5e-05, 1, 2, 3.5e-05]
 )
 print(params, params_covariance)
 
