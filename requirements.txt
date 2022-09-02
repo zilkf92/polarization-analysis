@@ -6,3 +6,4 @@ serial == 0.0.97
 matplotlib == 3.5.3
 scipy == 1.9.1
 pandas == 1.4.3
+black

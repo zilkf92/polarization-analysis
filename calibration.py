@@ -14,9 +14,9 @@ pm = PowerMeterScript.open_powermeter(serialnumber=serialnum)
 power_list = []
 deg_list = []
 
-for i in np.arange(0, 180, 1):
+for i in np.arange(0, 90, 1):
+    print(str(i) + " degree")
     deg_list.append(i)
-    time.sleep(0.5)
     waveplate.rotate(i)
     power_samples = []
     count = 0
@@ -24,9 +24,9 @@ for i in np.arange(0, 180, 1):
         power_sample = PowerMeterScript.measure(pm)
         power_samples.append(power_sample)
         count = count + 1
-    average_pow = fsum(power_samples)/count
+    average_pow = fsum(power_samples) / count
     power_list.append(average_pow)
-    time.sleep(0.5)
+    print(str(average_pow) + " appended")
 
 print(power_list, deg_list)
 
