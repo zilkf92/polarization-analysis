@@ -59,34 +59,21 @@ params, params_covariance = optimize.curve_fit(
 
 print(params, params_covariance)
 
-a, b, c, d = params
+pa, pb, pc, pd = params
+
+# x_data needs to be array-like or scalar to prevent TypeError in return value from sin function
+x_data = np.arange(0, 360, 0.02)
+
+plt.figure(figsize=(10, 8), dpi=80)
 
 plt.scatter(deg_list, power_list, label="DATA")
+plt.plot(
+    x_data,
+    fit.sin(x=x_data, a=pa, b=pb, c=pc, d=pd),
+    label="Fitted function",
+    color="red",
+)
 
-yvalue_list = []
-xvalue_list = []
-for k in np.arange(0, 360, 0.02):
-    yvalue = fit.sin(x=k, a=params[0], b=params[1], c=params[2], d=params[3])
-    xvalue_list.append(k)
-    yvalue_list.append(yvalue)
-
-dict = dict(zip(xvalue_list, yvalue_list))
-
-print(dict)
-print("MIN")
-min = min(dict.values())
-print(min)
-
-for x, y in dict.items():
-    if y == min:
-        print(x)
-
-listOfKeys = getKeysByValue(dict, min)
-print("Keys with value equal to MIN")
-# Iterate over the list of keys
-for key in listOfKeys:
-    print(key)
-
-plt.plot(xvalue_list, yvalue_list, label="FIT", color="red")
+plt.tight_layout()
 plt.legend(loc="best")
 plt.show()
