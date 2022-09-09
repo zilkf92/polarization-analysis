@@ -9,7 +9,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-
+# this function returns keys from dict for given values
 def getKeysByValue(dictOfElements, valueToFind):
     listOfKeys = list()
     listOfItems = dictOfElements.items()
@@ -19,6 +19,7 @@ def getKeysByValue(dictOfElements, valueToFind):
     return listOfKeys
 
 
+# power meter and rotation mount initialization
 serialnum = str(pm_settings.sn)
 waveplate = RotationScript.Waveplate(0)
 pm = PowerMeterScript.open_powermeter(serialnumber=serialnum)
@@ -29,7 +30,7 @@ power_list = []
 deg_list = []
 
 # perform a sample measurement to optimize fit parameters
-for alpha in np.arange(0, 180, 5):
+for alpha in np.arange(0, 180, 10):
     print(str(alpha) + " degree")
     deg_list.append(alpha)
     waveplate.rotate(alpha)
@@ -62,7 +63,17 @@ print(params, params_covariance)
 pa, pb, pc, pd = params
 
 # x_data needs to be array-like or scalar to prevent TypeError in return value from sin function
-x_data = np.arange(0, 360, 0.02)
+x_data = np.arange(start=0, stop=360, step=0.005, dtype=np.longdouble)
+y_data = np.array(object=[], dtype=np.longdouble)
+
+for x in x_data:
+    y = fit.sin(x=x, a=pa, b=pb, c=pc, d=pd)
+    y_data = np.append(arr=y_data, values=y)
+
+minval = min(y_data)
+dict = dict(zip(x_data, y_data))
+print("Minimum Angle:")
+print(getKeysByValue(dict, minval))
 
 plt.figure(figsize=(10, 8), dpi=80)
 
